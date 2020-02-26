@@ -31,7 +31,7 @@ class LRUCache:
             key = self.storage[key]
             self.dll.move_to_front(key)
             #and return the value associated with the key
-            return key.value[1]
+            return key.value[1] # [1] is index for value key.value is key,value pair
         else: #if key not in dict return none
             return None
 
@@ -51,6 +51,7 @@ class LRUCache:
        #if key already exists, overwrite old with new pair
        if key in self.storage:
            self.dll.move_to_front(self.storage[key])
+           #dict[key] = node head
            self.storage[key] = self.dll.head
            self.dll.head.value = (key, value)
        else:
@@ -60,7 +61,9 @@ class LRUCache:
             
        #if at max cap befor new pair is added -> oldest pair deleted(from tail)
        if len(self.dll) > self.limit:
-           del self.storage[self.dll.tail.value[0]]
+           #remove from cache[key to node we want to delete] -> [0] index is key
+           del self.storage[self.dll.tail.value[0]] #del only works with key
+           #remove node from ll
            self.dll.remove_from_tail()
            
            
